@@ -4,6 +4,8 @@ import { Routes, Route } from "react-router";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import Posts from "./pages/Posts";
+import PostDetail from "./pages/PostDetail";
+import NotFound from "./pages/NotFound";
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -43,7 +45,10 @@ function App() {
       controller.abort();
     }; //정리함수
   }, []);
-  console.log(posts);
+
+  const onDelete = _id => {
+    setPosts(prev => prev.filter(post => post.id !== _id));
+  };
 
   return (
     <>
@@ -51,12 +56,11 @@ function App() {
         <Route path="/" element={<Layout loaded={loaded} />}>
           <Route index element={<Home posts={posts} />} />
           <Route path="posts" element={<Posts posts={posts} />} />
-          {/* 
-        <Route
-          path="posts/:id"
-          element={<PostDetail posts={} onDelete={}/>}
-        />
-        <Route path="*" element={<NotFound />}/> */}
+          <Route
+            path="post/:id"
+            element={<PostDetail posts={posts} onDelete={onDelete} />}
+          />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </>

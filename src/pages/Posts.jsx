@@ -3,6 +3,7 @@ export default function Posts({ posts }) {
   const sorted = [...posts].sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
   );
+  
   return (
     <section>
       <h2>글 목록</h2>
@@ -13,7 +14,7 @@ export default function Posts({ posts }) {
       ) : (
         <ul>
           {sorted.map(p => (
-            <li>
+            <li key={p.id}>
               <Link to={`/post/${p.id}`}>{p.title}</Link>
             </li>
           ))}
